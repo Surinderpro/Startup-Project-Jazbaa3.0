@@ -1,6 +1,27 @@
+"use client";
 import React from 'react';
-import Link from "next/link";
+import Link from 'next/link';
+import { useRouter } from 'next/navigation';
+
 const Header: React.FC = () => {
+  const router = useRouter();
+  const [user, setUser] = React.useState<string | null>(null);
+
+  React.useEffect(() => {
+    // Retrieve user info from local storage or cookies
+    const storedUser = localStorage.getItem('user'); // Replace with cookie logic if needed
+    if (storedUser) {
+      setUser(storedUser);
+    }
+  }, []);
+
+  const handleSignOut = () => {
+    // Clear user session
+    localStorage.removeItem('user'); // Replace with cookie logic if needed
+    setUser(null);
+    router.push('/signin'); // Redirect to sign-in page
+  };
+
   return (
     <header className="flex flex-wrap md:justify-start md:flex-nowrap z-50 w-full py-7">
       <nav
@@ -10,25 +31,45 @@ const Header: React.FC = () => {
         <div className="md:col-span-3">
           {/* Logo */}
           <a
-  className="flex-none rounded-xl text-xl inline-block font-semibold focus:outline-none focus:opacity-80"
-  href="/"
-  aria-label="Preline"
->
-            <img src="/logo.jpg" alt="Logo" className="w-28 h-auto" />
+            className="flex-none rounded-xl text-xl inline-block font-semibold focus:outline-none focus:opacity-80"
+            href="/"
+            aria-label="Logo"
+          >
+            <img src="/logo.png" alt="Logo" className="w-28 h-auto" />
           </a>
           {/* End Logo */}
         </div>
 
         {/* Button Group */}
         <div className="flex items-center gap-x-2 ms-auto py-1 md:ps-6 md:order-3 md:col-span-3">
-          <Link href="/signin"
-            className="py-2 px-3 inline-flex items-center gap-x-2 text-sm font-medium rounded-xl border border-gray-200 text-black hover:bg-gray-100 disabled:opacity-50 disabled:pointer-events-none dark:border-neutral-700 dark:hover:bg-white/10 dark:text-white dark:hover:text-white">
-              Sign in
-          </Link>
-          <Link href="/signup"
-            className="py-2 px-3 inline-flex items-center gap-x-2 text-sm font-medium rounded-xl border border-transparent bg-lime-400 text-black hover:bg-lime-500 transition disabled:opacity-50 disabled:pointer-events-none focus:outline-none focus:bg-lime-500">
-              Sign up
-          </Link>
+          {user ? (
+            <>
+              <span className="py-2 px-3 inline-flex items-center gap-x-2 text-sm font-medium rounded-xl border border-gray-200 text-black dark:border-neutral-700 dark:text-white">
+                Welcome, {user}
+              </span>
+              <button
+                onClick={handleSignOut}
+                className="py-2 px-3 inline-flex items-center gap-x-2 text-sm font-medium rounded-xl border border-transparent bg-red-400 text-black hover:bg-red-500 transition disabled:opacity-50 disabled:pointer-events-none focus:outline-none focus:bg-red-500"
+              >
+                Sign out
+              </button>
+            </>
+          ) : (
+            <>
+              <Link
+                href="/signin"
+                className="py-2 px-3 inline-flex items-center gap-x-2 text-sm font-medium rounded-xl border border-gray-200 text-black hover:bg-gray-100 disabled:opacity-50 disabled:pointer-events-none dark:border-neutral-700 dark:hover:bg-white/10 dark:text-white dark:hover:text-white"
+              >
+                Sign in
+              </Link>
+              <Link
+                href="/signup"
+                className="py-2 px-3 inline-flex items-center gap-x-2 text-sm font-medium rounded-xl border border-transparent bg-lime-400 text-black hover:bg-lime-500 transition disabled:opacity-50 disabled:pointer-events-none focus:outline-none focus:bg-lime-500"
+              >
+                Sign up
+              </Link>
+            </>
+          )}
 
           <div className="md:hidden">
             <button
@@ -81,34 +122,42 @@ const Header: React.FC = () => {
         >
           <div className="flex flex-col gap-y-4 gap-x-0 mt-5 md:flex-row md:justify-center md:items-center md:gap-y-0 md:gap-x-7 md:mt-0">
             <div>
-            <Link href="/"
-              
-                className="inline-block text-black hover:text-gray-600 dark:text-white dark:hover:text-neutral-300" 
+              <Link
+                href="/"
+                className="inline-block text-black hover:text-gray-600 dark:text-white dark:hover:text-neutral-300"
               >
                 Home
               </Link>
             </div>
             <div>
-            <Link href="/About"
-              className="inline-block text-black hover:text-gray-600 dark:text-white dark:hover:text-neutral-300">
+              <Link
+                href="/About"
+                className="inline-block text-black hover:text-gray-600 dark:text-white dark:hover:text-neutral-300"
+              >
                 About
               </Link>
             </div>
             <div>
-            <Link href="/Teammate"
-              className="inline-block text-black hover:text-gray-600 dark:text-white dark:hover:text-neutral-300" >
+              <Link
+                href="/Teammate"
+                className="inline-block text-black hover:text-gray-600 dark:text-white dark:hover:text-neutral-300"
+              >
                 Our Team
               </Link>
             </div>
             <div>
-            <Link href="/contacti"
-              className="inline-block text-black hover:text-gray-600 dark:text-white dark:hover:text-neutral-300" >
+              <Link
+                href="/contacti"
+                className="inline-block text-black hover:text-gray-600 dark:text-white dark:hover:text-neutral-300"
+              >
                 Contact Us
               </Link>
             </div>
             <div>
-            <Link href="/Blog"
-              className="inline-block text-black hover:text-gray-600 dark:text-white dark:hover:text-neutral-300" >
+              <Link
+                href="/Blog"
+                className="inline-block text-black hover:text-gray-600 dark:text-white dark:hover:text-neutral-300"
+              >
                 Blog
               </Link>
             </div>

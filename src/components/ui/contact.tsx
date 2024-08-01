@@ -1,7 +1,37 @@
-import React from "react";
+"use client";
+import React, { useState } from "react";
 import Link from "next/link";
+import axios from "axios";
 
 const ContactUs: React.FC = () => {
+  const [firstName, setFirstName] = useState('');
+  const [lastName, setLastName] = useState('');
+  const [email, setEmail] = useState('');
+  const [phoneNumber, setPhoneNumber] = useState('');
+  const [details, setDetails] = useState('');
+  const [message, setMessage] = useState('');
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+
+    try {
+      const response = await axios.post('/api/contact', { firstName, lastName, email, phoneNumber, details });
+      if (response.data.success) {
+        setMessage('Your inquiry has been sent successfully.');
+        setFirstName('');
+        setLastName('');
+        setEmail('');
+        setPhoneNumber('');
+        setDetails('');
+      } else {
+        setMessage('Failed to send inquiry.');
+      }
+    } catch (error) {
+      console.error(error);
+      setMessage('Failed to send inquiry.');
+    }
+  };
+
   return (
     <div className="max-w-[85rem] px-4 py-10 sm:px-6 lg:px-8 lg:py-14 mx-auto">
       <div className="max-w-xl mx-auto">
@@ -21,7 +51,7 @@ const ContactUs: React.FC = () => {
             Fill in the form
           </h2>
 
-          <form>
+          <form onSubmit={handleSubmit}>
             <div className="grid gap-4 lg:gap-6">
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 lg:gap-6">
                 <div>
@@ -35,6 +65,8 @@ const ContactUs: React.FC = () => {
                     type="text"
                     name="hs-firstname-contacts-1"
                     id="hs-firstname-contacts-1"
+                    value={firstName}
+                    onChange={(e) => setFirstName(e.target.value)}
                     className="py-3 px-4 block w-full border border-gray-300 rounded-lg text-sm focus:border-blue-500 focus:ring-blue-500 dark:bg-neutral-800 dark:border-neutral-600 dark:text-neutral-400 dark:placeholder-neutral-500 dark:focus:ring-neutral-600"
                   />
                 </div>
@@ -50,6 +82,8 @@ const ContactUs: React.FC = () => {
                     type="text"
                     name="hs-lastname-contacts-1"
                     id="hs-lastname-contacts-1"
+                    value={lastName}
+                    onChange={(e) => setLastName(e.target.value)}
                     className="py-3 px-4 block w-full border border-gray-300 rounded-lg text-sm focus:border-blue-500 focus:ring-blue-500 dark:bg-neutral-800 dark:border-neutral-600 dark:text-neutral-400 dark:placeholder-neutral-500 dark:focus:ring-neutral-600"
                   />
                 </div>
@@ -67,6 +101,8 @@ const ContactUs: React.FC = () => {
                     type="email"
                     name="hs-email-contacts-1"
                     id="hs-email-contacts-1"
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
                     autoComplete="email"
                     className="py-3 px-4 block w-full border border-gray-300 rounded-lg text-sm focus:border-blue-500 focus:ring-blue-500 dark:bg-neutral-800 dark:border-neutral-600 dark:text-neutral-400 dark:placeholder-neutral-500 dark:focus:ring-neutral-600"
                   />
@@ -83,6 +119,8 @@ const ContactUs: React.FC = () => {
                     type="text"
                     name="hs-phone-number-1"
                     id="hs-phone-number-1"
+                    value={phoneNumber}
+                    onChange={(e) => setPhoneNumber(e.target.value)}
                     className="py-3 px-4 block w-full border border-gray-300 rounded-lg text-sm focus:border-blue-500 focus:ring-blue-500 dark:bg-neutral-800 dark:border-neutral-600 dark:text-neutral-400 dark:placeholder-neutral-500 dark:focus:ring-neutral-600"
                   />
                 </div>
@@ -99,6 +137,8 @@ const ContactUs: React.FC = () => {
                   id="hs-about-contacts-1"
                   name="hs-about-contacts-1"
                   rows={4}
+                  value={details}
+                  onChange={(e) => setDetails(e.target.value)}
                   className="py-3 px-4 block w-full border border-gray-300 rounded-lg text-sm focus:border-blue-500 focus:ring-blue-500 dark:bg-neutral-800 dark:border-neutral-600 dark:text-neutral-400 dark:placeholder-neutral-500 dark:focus:ring-neutral-600"
                 />
               </div>
@@ -112,6 +152,14 @@ const ContactUs: React.FC = () => {
                 Send inquiry
               </button>
             </div>
+
+            {message && (
+              <div className="mt-3 text-center">
+                <p className={`text-sm ${message.includes('success') ? 'text-green-600' : 'text-red-600'}`}>
+                  {message}
+                </p>
+              </div>
+            )}
 
             <div className="mt-3 text-center">
               <p className="text-sm text-gray-500 dark:text-neutral-500">

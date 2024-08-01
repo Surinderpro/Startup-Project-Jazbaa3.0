@@ -1,13 +1,25 @@
-import React from 'react'
-import ForgotPasswordForm from '@/components/ui/Forgetpasswd'
-import Footer from '@/components/ui/footer2'
-const page = () => {
+import React from 'react';
+import ForgotPasswordForm from '@/components/ui/Forgetpasswd';
+import Footer from '@/components/ui/footer2';
+
+const Page = () => {
   return (
-    <>
-    <ForgotPasswordForm></ForgotPasswordForm>
-    <Footer></Footer>
-    </>
-  )
+    <div
+      style={{
+        backgroundImage: "url('/bg6.png')",
+        backgroundSize: 'cover',
+        backgroundPosition: 'center',
+        minHeight: '100vh',
+        display: 'flex',
+        flexDirection: 'column',
+        justifyContent: 'center',
+        alignItems: 'center',
+      }}
+    >
+      <ForgotPasswordForm />
+      <Footer />
+    </div>
+  );
 }
 
-export default page
+export default Page;

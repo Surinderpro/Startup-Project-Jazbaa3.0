@@ -7,7 +7,7 @@ const AboutUs: React.FC = () => {
   <div className="w-64 h-64  mx-auto flex items-center justify-center">
     <img
       className="w-full h-full object-cover rounded-xl"
-      src="/logo.jpg"
+      src="/logo.png"
       alt="Platform Overview"
     />
   </div>

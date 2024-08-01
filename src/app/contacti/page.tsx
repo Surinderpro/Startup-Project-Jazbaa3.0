@@ -1,16 +1,26 @@
-import React from 'react'
-import ContactUs from '@/components/ui/contact'
-import Header from '@/components/ui/header'
-import Footer from '@/components/ui/footer2'
+import React from 'react';
+import ContactUs from '@/components/ui/contact';
+import Header from '@/components/ui/header';
+import Footer from '@/components/ui/footer2';
 
-const page = () => {
+const Page = () => {
   return (
-    <>
-    <Header></Header>
-    <ContactUs></ContactUs>
-    <Footer></Footer>
-    </>
-  )
+    <div
+      style={{
+        backgroundImage: "url('/bg6.png')",
+        backgroundSize: 'cover',
+        backgroundPosition: 'center',
+        minHeight: '100vh',
+        display: 'flex',
+        flexDirection: 'column',
+        alignItems: 'center',
+      }}
+    >
+      <Header />
+      <ContactUs />
+      <Footer />
+    </div>
+  );
 }
 
-export default page
+export default Page;

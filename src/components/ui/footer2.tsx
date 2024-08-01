@@ -1,7 +1,41 @@
-// Footer.tsx
-import React from 'react';
+"use client";
+import React, { useState } from 'react';
 import Link from "next/link";
+
 const Footer: React.FC = () => {
+  // State to store the email input value
+  const [email, setEmail] = useState("");
+  // State to manage subscription status
+  const [subscribed, setSubscribed] = useState(false);
+
+  // Function to handle form submission
+  const handleSubscribe = async (e: React.FormEvent) => {
+    e.preventDefault(); // Prevent default form submission
+    console.log('Subscribe button clicked');
+    
+    // Make a POST request to the backend API
+    try {
+      const response = await fetch('/api/subscribe', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ email }),
+      });
+
+      if (response.ok) {
+        setSubscribed(true); // Update the UI to show subscription success
+        console.log('Subscription successful');
+      } else {
+        console.log('Subscription failed', await response.text());
+        // Handle subscription failure
+      }
+    } catch (error) {
+      console.error('Subscription error', error);
+      // Handle error
+    }
+  };
+
   return (
     <footer className="mt-auto bg-gray-900 w-full dark:bg-neutral-950">
       <div className="mt-auto w-full max-w-[85rem] py-10 px-4 sm:px-6 lg:px-8 lg:pt-20 mx-auto">
@@ -16,8 +50,8 @@ const Footer: React.FC = () => {
             <h4 className="font-semibold text-gray-100">Support</h4>
 
             <div className="mt-3 grid space-y-3">
-              <p><Link href={"/faqi"} className="inline-flex gap-x-2 text-gray-400 hover:text-gray-200 dark:text-neutral-400 dark:hover:text-neutral-200" >FAQs</Link></p>
-              <p><Link href={"/contacti"} className="inline-flex gap-x-2 text-gray-400 hover:text-gray-200 dark:text-neutral-400 dark:hover:text-neutral-200" >Contact</Link></p>
+              <p><Link href={"/faqi"} className="inline-flex gap-x-2 text-gray-400 hover:text-gray-200 dark:text-neutral-400 dark:hover:text-neutral-200">FAQs</Link></p>
+              <p><Link href={"/contacti"} className="inline-flex gap-x-2 text-gray-400 hover:text-gray-200 dark:text-neutral-400 dark:hover:text-neutral-200">Contact</Link></p>
             </div>
           </div>
           {/* End Col */}
@@ -26,10 +60,10 @@ const Footer: React.FC = () => {
             <h4 className="font-semibold text-gray-100">Company</h4>
 
             <div className="mt-3 grid space-y-3">
-              <p><Link href={"/About"} className="inline-flex gap-x-2 text-gray-400 hover:text-gray-200 dark:text-neutral-400 dark:hover:text-neutral-200" >About us </Link></p>
-              <p><Link href={"/Teammate"} className="inline-flex gap-x-2 text-gray-400 hover:text-gray-200 dark:text-neutral-400 dark:hover:text-neutral-200" >Our Team</Link></p>
-              <p><Link href={"/Blog"} className="inline-flex gap-x-2 text-gray-400 hover:text-gray-200 dark:text-neutral-400 dark:hover:text-neutral-200" >Blog</Link></p>
-              <p><a className="inline-flex gap-x-2 text-gray-400 hover:text-gray-200 dark:text-neutral-400 dark:hover:text-neutral-200" href="#">Careers</a> <span className="inline ms-1 text-xs bg-blue-700 text-white py-1 px-2 rounded-lg">We're hiring</span></p>
+              <p><Link href={"/About"} className="inline-flex gap-x-2 text-gray-400 hover:text-gray-200 dark:text-neutral-400 dark:hover:text-neutral-200">About us</Link></p>
+              <p><Link href={"/Teammate"} className="inline-flex gap-x-2 text-gray-400 hover:text-gray-200 dark:text-neutral-400 dark:hover:text-neutral-200">Our Team</Link></p>
+              <p><Link href={"/Blog"} className="inline-flex gap-x-2 text-gray-400 hover:text-gray-200 dark:text-neutral-400 dark:hover:text-neutral-200">Blog</Link></p>
+              <p><Link href={"/Careers"} className="inline-flex gap-x-2 text-gray-400 hover:text-gray-200 dark:text-neutral-400 dark:hover:text-neutral-200" >Careers</Link> <span className="inline ms-1 text-xs bg-blue-700 text-white py-1 px-2 rounded-lg">We're hiring</span></p>
             </div>
           </div>
           {/* End Col */}
@@ -37,15 +71,27 @@ const Footer: React.FC = () => {
           <div className="col-span-2">
             <h4 className="font-semibold text-gray-100">Stay up to date</h4>
 
-            <form>
+            <form onSubmit={handleSubscribe}>
               <div className="mt-4 flex flex-col items-center gap-2 sm:flex-row sm:gap-3 bg-white rounded-lg p-2 dark:bg-neutral-900">
                 <div className="w-full">
-                  <label htmlFor="hero-input" className="sr-only">Search</label>
-                  <input type="text" id="hero-input" name="hero-input" className="py-3 px-4 block w-full border-transparent rounded-lg text-sm focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none dark:bg-neutral-900 dark:border-transparent dark:text-neutral-400 dark:placeholder-neutral-500 dark:focus:ring-neutral-600" placeholder="Enter your email" />
+                  <label htmlFor="hero-input" className="sr-only">Email</label>
+                  <input 
+                    type="email" 
+                    id="hero-input" 
+                    name="hero-input" 
+                    className="py-3 px-4 block w-full border-transparent rounded-lg text-sm focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none dark:bg-neutral-900 dark:border-transparent dark:text-neutral-400 dark:placeholder-neutral-500 dark:focus:ring-neutral-600" 
+                    placeholder="Enter your email" 
+                    value={email} 
+                    onChange={(e) => setEmail(e.target.value)} 
+                    required
+                  />
                 </div>
-                <a className="w-full sm:w-auto whitespace-nowrap p-3 inline-flex justify-center items-center gap-x-2 text-sm font-semibold rounded-lg border border-transparent bg-blue-600 text-white hover:bg-blue-700 disabled:opacity-50 disabled:pointer-events-none" href="#">
-                  Subscribe
-                </a>
+                <button 
+                  type="submit" 
+                  className="w-full sm:w-auto whitespace-nowrap p-3 inline-flex justify-center items-center gap-x-2 text-sm font-semibold rounded-lg border border-transparent bg-blue-600 text-white hover:bg-blue-700 disabled:opacity-50 disabled:pointer-events-none"
+                >
+                  {subscribed ? "Subscribed" : "Subscribe"}
+                </button>
               </div>
             </form>
           </div>
