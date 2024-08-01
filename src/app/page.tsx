@@ -1,7 +1,5 @@
-import { TypewriterEffect, TypewriterEffectSmooth } from "@/components/ui/typewriter-effect";
-import Image from "next/image";
+import { TypewriterEffectSmooth } from "@/components/ui/typewriter-effect";
 import Link from "next/link";
-import { AnimatedTooltipPreview } from "@/components/animated";
 import Footer from "@/components/ui/footer2";
 import Header from "@/components/ui/header";
 import CookieConsent from "@/components/ui/cookie";
