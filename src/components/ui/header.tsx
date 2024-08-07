@@ -64,7 +64,7 @@ const Header: React.FC = () => {
               </Link>
               <Link
                 href="/signup"
-                className="py-2 px-3 inline-flex items-center gap-x-2 text-sm font-medium rounded-xl border border-transparent bg-lime-400 text-black hover:bg-lime-500 transition disabled:opacity-50 disabled:pointer-events-none focus:outline-none focus:bg-lime-500"
+                className="py-2 px-3 inline-flex items-center gap-x-2 text-sm font-medium rounded-xl border border-transparent bg-blue-500 text-black hover:bg-blue-600 transition disabled:opacity-50 disabled:pointer-events-none focus:outline-none focus:bg-blue-600"
               >
                 Sign up
               </Link>

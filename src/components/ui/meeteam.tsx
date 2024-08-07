@@ -16,7 +16,7 @@ const TeamSection: React.FC = () => {
           <img className="rounded-full size-24 mx-auto" src="/devang.jpg" alt="Devang Kubde" />
           <div className="mt-2 sm:mt-4">
             <h3 className="font-medium text-gray-800 dark:text-neutral-200">Devang Kubde</h3>
-            <p className="text-sm text-gray-600 dark:text-neutral-400">Founder / CEO</p>
+            <p className="text-sm text-gray-600 dark:text-neutral-400">Founder</p>
           </div>
         </div>
         {/* End Col */}
